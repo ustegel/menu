@@ -1,166 +1,516 @@
 <!DOCTYPE html>
 <html lang="az">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Menyu</title>
-<style>
-:root{
-  --bg:#f3efe6; --ink:#1d2b2a; --muted:#5d6b69; --accent:#1f5f5b; --line:#cfc8b8; --card:#fbf9f3;
-}
-@media (prefers-color-scheme:dark){
-  :root{--bg:#14201f;--ink:#efe9da;--muted:#a3b0ad;--accent:#7fd1c7;--line:#33433f;--card:#1a2927}
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.5}
-header{text-align:center;padding:56px 20px 28px}
-h1{font-size:clamp(2.6rem,9vw,4.6rem);font-weight:400;letter-spacing:.02em;font-style:italic}
-header p{color:var(--muted);margin-top:6px;font-size:1rem}
-nav{position:sticky;top:0;z-index:5;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-  display:flex;gap:6px;overflow-x:auto;padding:10px 16px;justify-content:center;font-family:system-ui,sans-serif}
-nav a{color:var(--ink);text-decoration:none;padding:7px 14px;border-radius:99px;font-size:.9rem;white-space:nowrap}
-nav a:hover,nav a:focus-visible{background:var(--accent);color:var(--bg);outline:none}
-main{max-width:1040px;margin:0 auto;padding:12px 20px 60px}
-section{padding-top:44px}
-h2{font-size:2rem;font-weight:400;font-style:italic;color:var(--accent);display:flex;align-items:baseline;gap:14px}
-h2::after{content:"";flex:1;border-bottom:1px solid var(--line)}
-.sub{color:var(--muted);font-size:.95rem;margin:4px 0 14px;font-family:system-ui,sans-serif}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 48px}
-ul{list-style:none}
-li{display:flex;align-items:baseline;gap:8px;padding:9px 0;font-size:1.08rem}
-li::after{content:"";order:2;flex:1;border-bottom:1px dotted var(--line);transform:translateY(-4px)}
-li .n{order:1}
-li .n small{display:block;color:var(--muted);font-size:.8rem;font-family:system-ui,sans-serif}
-li .p{order:3;font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent)}
-.flat{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px 22px;margin-top:10px}
-.flat .head{display:flex;justify-content:space-between;font-size:1.25rem;font-style:italic;border-bottom:1px solid var(--line);padding-bottom:8px}
-.flat .head b{color:var(--accent);font-style:normal}
-.flat p{color:var(--muted);font-family:system-ui,sans-serif;font-size:.95rem;padding-top:10px}
-footer{text-align:center;color:var(--muted);font-size:.85rem;padding:0 20px 40px;font-family:system-ui,sans-serif}
-@media (max-width:520px){header{padding-top:40px}li{font-size:1rem}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Üstəgəl Menu</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        stg: {
+                            base: '#090C14',
+                            surface: '#0F1320',
+                            card: '#141929',
+                            cardHover: '#1A2035',
+                            textPrimary: '#F0F4FF',
+                            textSecondary: '#8B97B4',
+                            textMuted: '#4A5568',
+                            blue: '#4F8EF7',
+                            cyan: '#22D4E0',
+                            violet: '#8B5CF6',
+                            rose: '#F43F5E',
+                            amber: '#F59E0B',
+                            emerald: '#10B981',
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-primary': 'linear-gradient(to right, #4F8EF7, #22D4E0)',
+                        'gradient-success': 'linear-gradient(to right, #10B981, #06B6D4)',
+                    },
+                    boxShadow: {
+                        'glow-primary': '0 0 30px rgba(79,142,247,0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #090C14; color: #F0F4FF; -webkit-font-smoothing: antialiased; }
+        .glass-panel { background-color: #141929; border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; }
+        .glass-panel:hover { background-color: #1A2035; }
+        .input-field { background-color: #0F1320; border: 1px solid rgba(255,255,255,0.07); color: #F0F4FF; border-radius: 12px; transition: all 0.3s ease; }
+        .input-field:focus { outline: none; border-color: #4F8EF7; box-shadow: 0 0 0 2px rgba(79,142,247,0.2); }
+        .btn-primary { background: linear-gradient(to right, #4F8EF7, #22D4E0); color: white; border-radius: 100px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 14px 0 rgba(79,142,247,0.39); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(79,142,247,0.5); }
+        .btn-success { background: linear-gradient(to right, #10B981, #06B6D4); color: white; border-radius: 100px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 14px 0 rgba(16,185,129,0.39); }
+        .btn-success:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16,185,129,0.5); }
+        .btn-icon { background-color: rgba(255,255,255,0.07); border-radius: 50%; transition: background-color 0.2s; }
+        .btn-icon:hover { background-color: rgba(255,255,255,0.15); }
+        #order-modal-content::-webkit-scrollbar { width: 6px; }
+        #order-modal-content::-webkit-scrollbar-track { background: #0F1320; }
+        #order-modal-content::-webkit-scrollbar-thumb { background: #4A5568; border-radius: 10px; }
+        .category-nav { position: sticky; top: 0; z-index: 40; background: rgba(9,12,20,0.9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .category-link.active { color: #4F8EF7; border-bottom: 2px solid #4F8EF7; }
+        .qty-btn { width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 8px; background-color: #0F1320; border: 1px solid rgba(255,255,255,0.1); color: #F0F4FF; cursor: pointer; }
+        .qty-btn:active { background-color: #4F8EF7; color: white; border-color: #4F8EF7; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
 </head>
-<body>
-<header>
-  <h1>Menyu</h1>
-  <p>Qəhvə, kokteyl və şirniyyat içkiləri</p>
-</header>
-<nav>
-  <a href="#isti">İsti içkilər</a>
-  <a href="#soyuq">Soyuq içkilər</a>
-  <a href="#moktail">Moktaillər</a>
-  <a href="#mojito">Mojito</a>
-  <a href="#milkshake">Milkshake</a>
-  <a href="#cay">Çay</a>
-  <a href="#murebbe">Mürəbbə</a>
-</nav>
-<main>
+<body class="antialiased min-h-screen pb-24 relative selection:bg-stg-blue selection:text-white">
 
-<section id="isti">
-  <h2>İsti içkilər</h2>
-  <div class="grid">
-    <ul>
-      <li><span class="n">Americano</span><span class="p">5 ₼</span></li>
-      <li><span class="n">Cappuccino</span><span class="p">6 ₼</span></li>
-      <li><span class="n">Latte</span><span class="p">6 ₼</span></li>
-      <li><span class="n">Caramel Macchiato</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Mocha<small>tünd və ağ şokolad</small></span><span class="p">7 ₼</span></li>
-      <li><span class="n">Cortado</span><span class="p">6 ₼</span></li>
-      <li><span class="n">Flat White</span><span class="p">6 ₼</span></li>
-    </ul>
-    <ul>
-      <li><span class="n">Filtr qəhvə</span><span class="p">5 ₼</span></li>
-      <li><span class="n">Hot Chocolate</span><span class="p">5 ₼</span></li>
-      <li><span class="n">Miel</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Raf Coffee</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Sahlep</span><span class="p">5 ₼</span></li>
-      <li><span class="n">Türk qəhvəsi</span><span class="p">4 ₼</span></li>
-      <li><span class="n">Espresso (double)</span><span class="p">4 ₼</span></li>
-      <li><span class="n">Chai Tea Latte</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Matcha</span><span class="p">7 ₼</span></li>
-    </ul>
-  </div>
-</section>
+    <!-- Header / Logo -->
+    <header class="pt-8 pb-6 px-4 flex justify-center items-center flex-col">
+        <div class="w-full max-w-sm bg-white p-4 rounded-2xl shadow-glow-primary mb-4 flex justify-center">
+            <img src="https://docs.google.com/drawings/d/e/2PACX-1vQYSOAxXzzVbRkPp6AyyWePdIWyiYBa335CM_Q9oB8zsiCmic62aCJ9QrKmh0KDyvLDZw599M52M4XE/pub?w=960&h=720"
+                 alt="Üstəgəl Logo"
+                 class="h-20 object-contain mix-blend-multiply">
+        </div>
+        <p class="text-stg-textSecondary font-medium text-sm uppercase tracking-widest">Coffee • Events • Games</p>
+    </header>
 
-<section id="soyuq">
-  <h2>Soyuq içkilər</h2>
-  <div class="grid">
-    <ul>
-      <li><span class="n">Frappe</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Ice Americano</span><span class="p">5 ₼</span></li>
-      <li><span class="n">Ice Latte</span><span class="p">6 ₼</span></li>
-      <li><span class="n">Ice Mocha<small>tünd və ağ şokolad</small></span><span class="p">7 ₼</span></li>
-      <li><span class="n">Ice Caramel Macchiato</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Ice Latte Lavender</span><span class="p">7 ₼</span></li>
-    </ul>
-    <ul>
-      <li><span class="n">Blue Ocean Ice Coffee</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Ice Strawberry Cloud Latte</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Ice Pumpkin Latte</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Summer Is Coffee</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Affogato</span><span class="p">6 ₼</span></li>
-      <li><span class="n">Ice Raff</span><span class="p">7 ₼</span></li>
-    </ul>
-  </div>
-</section>
+    <!-- Loading State -->
+    <div id="loader" class="flex flex-col items-center justify-center py-20">
+        <div class="w-10 h-10 border-4 border-stg-surface border-t-stg-blue rounded-full animate-spin mb-4"></div>
+        <p class="text-stg-textSecondary">Menyu yüklənir...</p>
+    </div>
 
-<section id="moktail">
-  <h2>Moktaillər</h2>
-  <div class="grid">
-    <ul>
-      <li><span class="n">Blue Angel</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Bull Moctail</span><span class="p">8 ₼</span></li>
-      <li><span class="n">Cool Line</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Malibu Barbie</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Frozen</span><span class="p">6 ₼</span></li>
-    </ul>
-    <ul>
-      <li><span class="n">Mango-Ananas Sayyegay</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Maracuya-Lime Moctail</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Exotic Paradise</span><span class="p">8 ₼</span></li>
-      <li><span class="n">Fındıq Mocha</span><span class="p">8 ₼</span></li>
-    </ul>
-  </div>
-</section>
+    <!-- Main Content -->
+    <main id="main-content" class="hidden w-full max-w-3xl mx-auto px-4">
+        <nav id="category-nav" class="category-nav flex overflow-x-auto gap-6 py-4 mb-6 -mx-4 px-4 scrollbar-hide snap-x"></nav>
+        <div id="menu-container" class="space-y-10"></div>
+    </main>
 
-<section id="mojito">
-  <h2>Mojito</h2>
-  <div class="flat">
-    <div class="head"><span>Bütün növlər</span><b>7 ₼</b></div>
-    <p>Classic · Strawberry · Blueberry · Watermelon · Mango · Ananas · Raspberry · Maracuya</p>
-  </div>
-</section>
+    <!-- Floating 'Sifariş ver' Button -->
+    <div id="fab-container" class="fixed bottom-6 left-0 right-0 px-4 flex justify-center z-40 opacity-0 transform translate-y-10 transition-all duration-500 pointer-events-none">
+        <button id="open-order-btn" class="btn-primary w-full max-w-md py-4 px-6 flex justify-between items-center text-lg shadow-2xl pointer-events-auto">
+            <span>Sifariş ver</span>
+            <span id="fab-total" class="bg-white text-stg-base px-3 py-1 rounded-full text-sm font-bold">0.00 ₼</span>
+        </button>
+    </div>
 
-<section id="milkshake">
-  <h2>Milkshake</h2>
-  <div class="flat">
-    <div class="head"><span>Bütün növlər</span><b>8 ₼</b></div>
-    <p>Banan · Çiyələk · Mango · Şokolad · Karamel · Vanil · Raspberry</p>
-  </div>
-</section>
+    <!-- Order Modal -->
+    <div id="order-modal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeOrderModal()"></div>
 
-<section id="cay">
-  <h2>Çay</h2>
-  <ul>
-    <li><span class="n">Çay<small>birnəfərlik, takeaway</small></span><span class="p">2 ₼</span></li>
-  </ul>
-</section>
+        <div class="absolute bottom-0 left-0 right-0 bg-stg-card rounded-t-3xl border-t border-white/10 max-h-[90vh] flex flex-col transform transition-transform duration-300 translate-y-full" id="order-modal-sheet">
 
-<section id="murebbe">
-  <h2>Mürəbbə</h2>
-  <div class="grid">
-    <ul>
-      <li><span class="n">Çiyələk mürəbbəsi</span><span class="p">7 ₼</span></li>
-      <li><span class="n">Qoz mürəbbəsi</span><span class="p">7 ₼</span></li>
-    </ul>
-    <ul>
-      <li><span class="n">Gilas mürəbbəsi</span><span class="p">7 ₼</span></li>
-    </ul>
-  </div>
-</section>
+            <div class="flex justify-between items-center p-6 border-b border-white/10">
+                <h2 class="font-display text-xl font-bold text-white">Sifarişiniz</h2>
+                <button onclick="closeOrderModal()" class="btn-icon w-8 h-8 flex items-center justify-center text-stg-textSecondary">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
 
-</main>
-<footer>Qiymətlər manatla (₼) göstərilib.</footer>
+            <div class="p-6 overflow-y-auto" id="order-modal-content">
+                <div class="space-y-4 mb-8">
+                    <div>
+                        <label class="block text-sm font-medium text-stg-textSecondary mb-2">Masa No <span class="text-stg-rose">*</span></label>
+                        <input type="number" id="table-no" class="input-field w-full p-3" placeholder="Məs: 12" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-stg-textSecondary mb-2">Adınız <span class="text-stg-rose">*</span></label>
+                        <input type="text" id="customer-name" class="input-field w-full p-3" placeholder="Adınızı daxil edin" required>
+                    </div>
+                </div>
+
+                <h3 class="font-display text-lg text-white mb-4">Seçilmiş Məhsullar</h3>
+                <div id="order-summary-list" class="space-y-3 mb-6"></div>
+
+                <div class="flex justify-between items-center py-4 border-t border-white/10 mt-4">
+                    <span class="text-stg-textSecondary font-medium">Ümumi Məbləğ:</span>
+                    <span id="modal-total" class="font-display text-2xl font-bold text-stg-cyan">0.00 ₼</span>
+                </div>
+            </div>
+
+            <div class="p-6 border-t border-white/10 bg-stg-surface">
+                <button id="submit-order-btn" class="btn-success w-full py-4 text-lg flex justify-center items-center gap-2">
+                    <span>Təsdiq Et</span>
+                    <i class="fas fa-check-circle"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="toast" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-stg-card border border-stg-emerald text-white px-6 py-3 rounded-full shadow-lg z-50 flex items-center gap-3 transition-all duration-300 -translate-y-20 opacity-0">
+        <i class="fas fa-check-circle text-stg-emerald text-xl"></i>
+        <span class="font-medium" id="toast-message">Sifariş uğurla göndərildi!</span>
+    </div>
+
+    <script>
+        // =====================================================
+        // AYARLAR: Apps Script Web App ünvanı
+        // =====================================================
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxQ8M164evYBaxzVnWfHxo2hIfEc5Jls16NMJNPo537IWwCqLSLOTSqocI0nxtFAKdJ4Q/exec';
+
+        // Bu səhifə Apps Script daxilində açılıbsa true, GitHub-da açılıbsa false
+        const IN_APPS_SCRIPT = (typeof google !== 'undefined' && google.script && google.script.run);
+
+        // State management
+        let menuData = {};
+        let cart = {};
+
+        // DOM Elements
+        const loader = document.getElementById('loader');
+        const mainContent = document.getElementById('main-content');
+        const menuContainer = document.getElementById('menu-container');
+        const categoryNav = document.getElementById('category-nav');
+
+        const fabContainer = document.getElementById('fab-container');
+        const fabTotal = document.getElementById('fab-total');
+        const openOrderBtn = document.getElementById('open-order-btn');
+
+        const orderModal = document.getElementById('order-modal');
+        const orderModalSheet = document.getElementById('order-modal-sheet');
+        const orderSummaryList = document.getElementById('order-summary-list');
+        const modalTotal = document.getElementById('modal-total');
+        const submitOrderBtn = document.getElementById('submit-order-btn');
+
+        const tableNoInput = document.getElementById('table-no');
+        const customerNameInput = document.getElementById('customer-name');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchMenu();
+            openOrderBtn.addEventListener('click', openOrderModal);
+            submitOrderBtn.addEventListener('click', submitOrder);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeOrderModal();
+            });
+        });
+
+        function fetchMenu() {
+            if (IN_APPS_SCRIPT) {
+                google.script.run
+                    .withSuccessHandler(handleMenuData)
+                    .withFailureHandler(handleError)
+                    .getMenuData();
+            } else {
+                fetch(API_URL + '?action=menu')
+                    .then(res => res.json())
+                    .then(handleMenuData)
+                    .catch(err => handleError(err.message || err));
+            }
+        }
+
+        function handleMenuData(response) {
+            loader.style.display = 'none';
+            if (response.success) {
+                menuData = response.data;
+                renderMenu();
+                mainContent.classList.remove('hidden');
+            } else {
+                handleError(response.error);
+            }
+        }
+
+        function handleError(error) {
+            loader.style.display = 'flex';
+            loader.innerHTML = `
+                <div class="text-stg-rose text-center p-6 glass-panel">
+                    <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
+                    <p>Xəta baş verdi. Zəhmət olmasa səhifəni yeniləyin.</p>
+                    <p class="text-sm mt-2 opacity-70">${error}</p>
+                </div>
+            `;
+        }
+
+        function renderMenu() {
+            menuContainer.innerHTML = '';
+            categoryNav.innerHTML = '';
+
+            const categories = Object.keys(menuData);
+
+            if (categories.length === 0) {
+                menuContainer.innerHTML = '<p class="text-center text-stg-textSecondary">Menyuda məhsul tapılmadı.</p>';
+                return;
+            }
+
+            categories.forEach((category, index) => {
+                const navLink = document.createElement('a');
+                navLink.href = `#cat-${index}`;
+                navLink.className = `category-link whitespace-nowrap px-1 py-2 font-medium text-sm transition-colors ${index === 0 ? 'active' : 'text-stg-textSecondary'}`;
+                navLink.textContent = category;
+
+                navLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll('.category-link').forEach(l => l.classList.remove('active', 'text-white'));
+                    navLink.classList.add('active', 'text-white');
+                    navLink.classList.remove('text-stg-textSecondary');
+
+                    const targetId = navLink.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    const yOffset = -80;
+                    const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                });
+
+                categoryNav.appendChild(navLink);
+
+                const section = document.createElement('div');
+                section.id = `cat-${index}`;
+                section.className = 'scroll-mt-24';
+
+                const catTitle = document.createElement('h2');
+                catTitle.className = 'font-display text-2xl font-bold text-white mb-4 border-b border-white/10 pb-2';
+                catTitle.textContent = category;
+                section.appendChild(catTitle);
+
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-3';
+
+                menuData[category].forEach(item => {
+                    const itemCard = document.createElement('div');
+                    itemCard.className = 'glass-panel p-4 flex justify-between items-center';
+
+                    const safeName = item.name.replace(/[^a-zA-Z0-9]/g, '_');
+
+                    itemCard.innerHTML = `
+                        <div class="flex-1 pr-4">
+                            <h3 class="font-medium text-stg-textPrimary text-lg leading-tight">${item.name}</h3>
+                            <p class="text-stg-blue font-bold mt-1 font-display">${item.price.toFixed(2)} ₼</p>
+                        </div>
+                        <div class="flex items-center gap-3 bg-stg-base p-1 rounded-xl border border-white/5">
+                            <button class="qty-btn" aria-label="Decrease">
+                                <i class="fas fa-minus text-xs"></i>
+                            </button>
+                            <span id="qty-${safeName}" class="w-6 text-center font-bold text-white">0</span>
+                            <button class="qty-btn" aria-label="Increase">
+                                <i class="fas fa-plus text-xs"></i>
+                            </button>
+                        </div>
+                    `;
+                    const btns = itemCard.querySelectorAll('.qty-btn');
+                    btns[0].addEventListener('click', () => updateCart(item.name, item.price, -1));
+                    btns[1].addEventListener('click', () => updateCart(item.name, item.price, 1));
+                    grid.appendChild(itemCard);
+                });
+
+                section.appendChild(grid);
+                menuContainer.appendChild(section);
+            });
+
+            setupScrollSpy();
+        }
+
+        function updateCart(itemName, price, change) {
+            if (!cart[itemName]) {
+                cart[itemName] = { price: price, quantity: 0 };
+            }
+            cart[itemName].quantity += change;
+            if (cart[itemName].quantity <= 0) {
+                delete cart[itemName];
+            }
+            updateUI(itemName);
+        }
+
+        function updateUI(itemName) {
+            const safeName = itemName.replace(/[^a-zA-Z0-9]/g, '_');
+            const qtyElement = document.getElementById(`qty-${safeName}`);
+
+            if (qtyElement) {
+                qtyElement.textContent = cart[itemName] ? cart[itemName].quantity : 0;
+                qtyElement.parentElement.classList.add('scale-105', 'bg-stg-surface');
+                setTimeout(() => qtyElement.parentElement.classList.remove('scale-105', 'bg-stg-surface'), 200);
+            }
+
+            let total = 0;
+            let totalItems = 0;
+            for (const item in cart) {
+                total += cart[item].price * cart[item].quantity;
+                totalItems += cart[item].quantity;
+            }
+
+            const formattedTotal = total.toFixed(2) + ' ₼';
+            fabTotal.textContent = formattedTotal;
+            modalTotal.textContent = formattedTotal;
+
+            if (totalItems > 0) {
+                fabContainer.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+            } else {
+                fabContainer.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+                if (!orderModal.classList.contains('hidden')) {
+                    closeOrderModal();
+                }
+            }
+        }
+
+        function openOrderModal() {
+            orderSummaryList.innerHTML = '';
+
+            for (const [itemName, details] of Object.entries(cart)) {
+                const itemTotal = (details.price * details.quantity).toFixed(2);
+
+                const row = document.createElement('div');
+                row.className = 'flex justify-between items-center p-3 bg-stg-base rounded-xl border border-white/5';
+                row.innerHTML = `
+                    <div class="flex-1">
+                        <h4 class="text-white font-medium text-sm">${itemName}</h4>
+                        <div class="text-stg-textMuted text-xs mt-1">${details.price.toFixed(2)} ₼ x ${details.quantity}</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-bold text-stg-cyan">${itemTotal} ₼</div>
+                    </div>
+                `;
+                orderSummaryList.appendChild(row);
+            }
+
+            orderModal.classList.remove('hidden');
+            setTimeout(() => {
+                orderModalSheet.classList.remove('translate-y-full');
+            }, 10);
+
+            fabContainer.style.display = 'none';
+        }
+
+        function closeOrderModal() {
+            orderModalSheet.classList.add('translate-y-full');
+            setTimeout(() => {
+                orderModal.classList.add('hidden');
+                if (Object.keys(cart).length > 0) {
+                    fabContainer.style.display = 'flex';
+                }
+            }, 300);
+        }
+
+        function submitOrder() {
+            const tableNo = tableNoInput.value.trim();
+            const customerName = customerNameInput.value.trim();
+
+            if (!tableNo || !customerName) {
+                alert('Zəhmət olmasa Masa No və Adınızı daxil edin.');
+
+                if (!tableNo) tableNoInput.classList.add('border-stg-rose');
+                if (!customerName) customerNameInput.classList.add('border-stg-rose');
+
+                setTimeout(() => {
+                    tableNoInput.classList.remove('border-stg-rose');
+                    customerNameInput.classList.remove('border-stg-rose');
+                }, 2000);
+
+                return;
+            }
+
+            const orderItems = [];
+            let total = 0;
+            for (const [name, details] of Object.entries(cart)) {
+                orderItems.push({ name: name, quantity: details.quantity, price: details.price });
+                total += details.price * details.quantity;
+            }
+
+            const orderData = {
+                tableNo: tableNo,
+                customerName: customerName,
+                items: orderItems,
+                total: total
+            };
+
+            const originalBtnHtml = submitOrderBtn.innerHTML;
+            submitOrderBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Göndərilir...';
+            submitOrderBtn.disabled = true;
+            submitOrderBtn.classList.add('opacity-70');
+
+            const resetBtn = () => {
+                submitOrderBtn.innerHTML = originalBtnHtml;
+                submitOrderBtn.disabled = false;
+                submitOrderBtn.classList.remove('opacity-70');
+            };
+
+            const onSuccess = (response) => {
+                resetBtn();
+                if (response.success) {
+                    closeOrderModal();
+                    showToast();
+                    resetApp();
+                } else {
+                    alert('Xəta baş verdi: ' + response.error);
+                }
+            };
+
+            const onFailure = (error) => {
+                resetBtn();
+                alert('Sistem xətası: ' + (error.message || error));
+            };
+
+            if (IN_APPS_SCRIPT) {
+                google.script.run
+                    .withSuccessHandler(onSuccess)
+                    .withFailureHandler(onFailure)
+                    .submitOrder(orderData);
+            } else {
+                fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify(orderData)
+                })
+                    .then(res => res.json())
+                    .then(onSuccess)
+                    .catch(onFailure);
+            }
+        }
+
+        function resetApp() {
+            cart = {};
+            document.querySelectorAll('span[id^="qty-"]').forEach(el => {
+                el.textContent = '0';
+            });
+            updateUI('');
+            tableNoInput.value = '';
+            customerNameInput.value = '';
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('-translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('-translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        function setupScrollSpy() {
+            const sections = document.querySelectorAll('#menu-container > div[id^="cat-"]');
+            const navLinks = document.querySelectorAll('.category-link');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            if (link.getAttribute('href') === `#${id}`) {
+                                navLinks.forEach(l => l.classList.remove('active', 'text-white'));
+                                link.classList.add('active', 'text-white');
+                                link.classList.remove('text-stg-textSecondary');
+
+                                const navContainer = document.getElementById('category-nav');
+                                navContainer.scrollLeft = link.offsetLeft - (navContainer.offsetWidth / 2) + (link.offsetWidth / 2);
+                            }
+                        });
+                    }
+                });
+            }, { root: null, rootMargin: '-100px 0px -60% 0px', threshold: 0 });
+
+            sections.forEach(section => observer.observe(section));
+        }
+    </script>
 </body>
+<!-- Created by Rakim Hagverdiyev -->
 </html>
