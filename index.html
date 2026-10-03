@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Menyu</title>
+<style>
+:root{
+  --bg:#f3efe6; --ink:#1d2b2a; --muted:#5d6b69; --accent:#1f5f5b; --line:#cfc8b8; --card:#fbf9f3;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#14201f;--ink:#efe9da;--muted:#a3b0ad;--accent:#7fd1c7;--line:#33433f;--card:#1a2927}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:Georgia,"Times New Roman",serif;line-height:1.5}
+header{text-align:center;padding:56px 20px 28px}
+h1{font-size:clamp(2.6rem,9vw,4.6rem);font-weight:400;letter-spacing:.02em;font-style:italic}
+header p{color:var(--muted);margin-top:6px;font-size:1rem}
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  display:flex;gap:6px;overflow-x:auto;padding:10px 16px;justify-content:center;font-family:system-ui,sans-serif}
+nav a{color:var(--ink);text-decoration:none;padding:7px 14px;border-radius:99px;font-size:.9rem;white-space:nowrap}
+nav a:hover,nav a:focus-visible{background:var(--accent);color:var(--bg);outline:none}
+main{max-width:1040px;margin:0 auto;padding:12px 20px 60px}
+section{padding-top:44px}
+h2{font-size:2rem;font-weight:400;font-style:italic;color:var(--accent);display:flex;align-items:baseline;gap:14px}
+h2::after{content:"";flex:1;border-bottom:1px solid var(--line)}
+.sub{color:var(--muted);font-size:.95rem;margin:4px 0 14px;font-family:system-ui,sans-serif}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:0 48px}
+ul{list-style:none}
+li{display:flex;align-items:baseline;gap:8px;padding:9px 0;font-size:1.08rem}
+li::after{content:"";order:2;flex:1;border-bottom:1px dotted var(--line);transform:translateY(-4px)}
+li .n{order:1}
+li .n small{display:block;color:var(--muted);font-size:.8rem;font-family:system-ui,sans-serif}
+li .p{order:3;font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent)}
+.flat{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px 22px;margin-top:10px}
+.flat .head{display:flex;justify-content:space-between;font-size:1.25rem;font-style:italic;border-bottom:1px solid var(--line);padding-bottom:8px}
+.flat .head b{color:var(--accent);font-style:normal}
+.flat p{color:var(--muted);font-family:system-ui,sans-serif;font-size:.95rem;padding-top:10px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:0 20px 40px;font-family:system-ui,sans-serif}
+@media (max-width:520px){header{padding-top:40px}li{font-size:1rem}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Menyu</h1>
+  <p>Qəhvə, kokteyl və şirniyyat içkiləri</p>
+</header>
+<nav>
+  <a href="#isti">İsti içkilər</a>
+  <a href="#soyuq">Soyuq içkilər</a>
+  <a href="#moktail">Moktaillər</a>
+  <a href="#mojito">Mojito</a>
+  <a href="#milkshake">Milkshake</a>
+</nav>
+<main>
+
+<section id="isti">
+  <h2>İsti içkilər</h2>
+  <div class="grid">
+    <ul>
+      <li><span class="n">Americano</span><span class="p">5 ₼</span></li>
+      <li><span class="n">Cappuccino</span><span class="p">6 ₼</span></li>
+      <li><span class="n">Latte</span><span class="p">6 ₼</span></li>
+      <li><span class="n">Caramel Macchiato</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Mocha<small>tünd və ağ şokolad</small></span><span class="p">7 ₼</span></li>
+      <li><span class="n">Cortado</span><span class="p">6 ₼</span></li>
+      <li><span class="n">Flat White</span><span class="p">6 ₼</span></li>
+    </ul>
+    <ul>
+      <li><span class="n">Filtr qəhvə</span><span class="p">5 ₼</span></li>
+      <li><span class="n">Hot Chocolate</span><span class="p">5 ₼</span></li>
+      <li><span class="n">Miel</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Raf Coffee</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Sahlep</span><span class="p">5 ₼</span></li>
+      <li><span class="n">Türk qəhvəsi</span><span class="p">4 ₼</span></li>
+      <li><span class="n">Espresso (double)</span><span class="p">4 ₼</span></li>
+      <li><span class="n">Chai Tea Latte</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Matcha</span><span class="p">7 ₼</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="soyuq">
+  <h2>Soyuq içkilər</h2>
+  <div class="grid">
+    <ul>
+      <li><span class="n">Frappe</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Ice Americano</span><span class="p">5 ₼</span></li>
+      <li><span class="n">Ice Latte</span><span class="p">6 ₼</span></li>
+      <li><span class="n">Ice Mocha<small>tünd və ağ şokolad</small></span><span class="p">7 ₼</span></li>
+      <li><span class="n">Ice Caramel Macchiato</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Ice Latte Lavender</span><span class="p">7 ₼</span></li>
+    </ul>
+    <ul>
+      <li><span class="n">Blue Ocean Ice Coffee</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Ice Strawberry Cloud Latte</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Ice Pumpkin Latte</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Summer Is Coffee</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Affogato</span><span class="p">6 ₼</span></li>
+      <li><span class="n">Ice Raff</span><span class="p">7 ₼</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="moktail">
+  <h2>Moktaillər</h2>
+  <div class="grid">
+    <ul>
+      <li><span class="n">Blue Angel</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Bull Moctail</span><span class="p">8 ₼</span></li>
+      <li><span class="n">Cool Line</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Malibu Barbie</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Frozen</span><span class="p">6 ₼</span></li>
+    </ul>
+    <ul>
+      <li><span class="n">Mango-Ananas Sayyegay</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Maracuya-Lime Moctail</span><span class="p">7 ₼</span></li>
+      <li><span class="n">Exotic Paradise</span><span class="p">8 ₼</span></li>
+      <li><span class="n">Fındıq Mocha</span><span class="p">8 ₼</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="mojito">
+  <h2>Mojito</h2>
+  <div class="flat">
+    <div class="head"><span>Bütün növlər</span><b>7 ₼</b></div>
+    <p>Classic · Strawberry · Blueberry · Watermelon · Mango · Ananas · Raspberry · Maracuya</p>
+  </div>
+</section>
+
+<section id="milkshake">
+  <h2>Milkshake</h2>
+  <div class="flat">
+    <div class="head"><span>Bütün növlər</span><b>8 ₼</b></div>
+    <p>Banan · Çiyələk · Mango · Şokolad · Karamel · Vanil · Raspberry</p>
+  </div>
+</section>
+
+</main>
+<footer>Qiymətlər manatla (₼) göstərilib.</footer>
+</body>
+</html>
