@@ -153,6 +153,17 @@
             object-position: 50% 42%;
             mix-blend-mode: multiply;
         }
+
+        /* Qəbz */
+        .receipt-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            border: 1px solid rgba(59, 31, 18, 0.10);
+            box-shadow: 0 10px 40px rgba(59, 31, 18, 0.18);
+        }
+        .receipt-divider {
+            border-top: 2px dashed rgba(59, 31, 18, 0.20);
+        }
     </style>
 </head>
 <body class="antialiased min-h-screen pb-24 relative selection:bg-stg-ink selection:text-white">
@@ -230,10 +241,50 @@
         </div>
     </div>
 
-    <!-- Success Toast -->
-    <div id="toast" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-stg-card border border-stg-success text-stg-ink px-6 py-3 rounded-full shadow-lg z-50 flex items-center gap-3 transition-all duration-300 -translate-y-20 opacity-0">
-        <i class="fas fa-check-circle text-stg-success text-xl"></i>
-        <span class="font-medium" id="toast-message">Sifariş uğurla göndərildi!</span>
+    <!-- Receipt Overlay (Sifariş uğurla göndərildi + qəbz) -->
+    <div id="receipt-overlay" class="fixed inset-0 z-[60] hidden overflow-y-auto" style="background: rgba(59,31,18,0.65);">
+        <div class="min-h-full flex items-center justify-center p-4">
+            <div class="receipt-card w-full max-w-md p-6">
+
+                <div class="text-center mb-5">
+                    <div class="w-14 h-14 rounded-full mx-auto mb-3 flex items-center justify-center" style="background: rgba(94,139,78,0.12);">
+                        <i class="fas fa-check-circle text-stg-success text-3xl"></i>
+                    </div>
+                    <h2 class="font-display text-xl font-bold text-stg-ink" id="receipt-title">Sifariş uğurla göndərildi!</h2>
+                </div>
+
+                <div class="receipt-divider mb-4"></div>
+
+                <div class="mb-1 text-center">
+                    <div class="font-display font-bold text-stg-ink tracking-wide">Üstəgəl</div>
+                    <div class="text-xs text-stg-textMuted mt-1">Sifariş qəbzi</div>
+                </div>
+
+                <div class="text-sm space-y-1 my-4">
+                    <div class="flex justify-between"><span class="text-stg-textSecondary">Tarix:</span><span class="font-medium text-stg-ink" id="receipt-date"></span></div>
+                    <div class="flex justify-between"><span class="text-stg-textSecondary">Masa No:</span><span class="font-medium text-stg-ink" id="receipt-table"></span></div>
+                    <div class="flex justify-between gap-4"><span class="text-stg-textSecondary">Ad:</span><span class="font-medium text-stg-ink text-right break-words" id="receipt-name"></span></div>
+                </div>
+
+                <div class="receipt-divider mb-4"></div>
+
+                <div id="receipt-items" class="space-y-3 mb-4"></div>
+
+                <div class="receipt-divider mb-4"></div>
+
+                <div class="flex justify-between items-center mb-5">
+                    <span class="font-display font-semibold text-stg-ink">Yekun məbləğ:</span>
+                    <span id="receipt-total" class="font-display text-2xl font-bold text-stg-ink">0.00 ₼</span>
+                </div>
+
+                <div class="rounded-xl p-4 text-center mb-5 bg-stg-surface border border-stg-ink/10">
+                    <p class="text-sm text-stg-ink leading-relaxed">Qəbzi telefonunuzda saxlayın və zəhmət olmasa, yekunda ödəniş üçün kassaya yaxınlaşın.</p>
+                    <p class="font-display font-bold text-stg-caramel mt-2">Nuş olsun!</p>
+                </div>
+
+                <button id="close-receipt-btn" class="btn-primary w-full py-3 text-base">Bağla</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -265,6 +316,8 @@
         const tableNoInput = document.getElementById('table-no');
         const customerNameInput = document.getElementById('customer-name');
 
+        const receiptOverlay = document.getElementById('receipt-overlay');
+
         function escapeHtml(str) {
             return String(str).replace(/[&<>"']/g, c => ({
                 '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
@@ -272,6 +325,11 @@
         }
         function safeId(name) {
             return name.replace(/[^a-zA-Z0-9]/g, '_');
+        }
+        function pad2(n) { return String(n).padStart(2, '0'); }
+        function formatDate(d) {
+            return pad2(d.getDate()) + '.' + pad2(d.getMonth() + 1) + '.' + d.getFullYear() +
+                   ' ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -281,6 +339,7 @@
             submitOrderBtn.addEventListener('click', submitOrder);
             document.getElementById('modal-backdrop').addEventListener('click', closeOrderModal);
             document.getElementById('close-modal-btn').addEventListener('click', closeOrderModal);
+            document.getElementById('close-receipt-btn').addEventListener('click', closeReceipt);
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') closeOrderModal();
@@ -487,6 +546,40 @@
             }, 300);
         }
 
+        // ---------------- Receipt ----------------
+        function showReceipt(order) {
+            document.getElementById('receipt-date').textContent = formatDate(order.date);
+            document.getElementById('receipt-table').textContent = order.tableNo;
+            document.getElementById('receipt-name').textContent = order.customerName;
+
+            const list = document.getElementById('receipt-items');
+            list.innerHTML = '';
+            order.items.forEach(it => {
+                const lineTotal = (it.price * it.quantity).toFixed(2);
+                const row = document.createElement('div');
+                row.className = 'flex justify-between items-start gap-3 text-sm';
+                row.innerHTML = `
+                    <div class="flex-1">
+                        <div class="font-medium text-stg-ink">${escapeHtml(it.name)}</div>
+                        <div class="text-xs text-stg-textMuted mt-0.5">${it.price.toFixed(2)} ₼ x ${it.quantity}</div>
+                    </div>
+                    <div class="font-bold text-stg-caramel whitespace-nowrap">${lineTotal} ₼</div>
+                `;
+                list.appendChild(row);
+            });
+
+            document.getElementById('receipt-total').textContent = order.total.toFixed(2) + ' ₼';
+
+            receiptOverlay.classList.remove('hidden');
+            receiptOverlay.scrollTop = 0;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeReceipt() {
+            receiptOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
         // ---------------- Submit ----------------
         async function submitOrder() {
             const tableNo = tableNoInput.value.trim();
@@ -516,6 +609,14 @@
                 items: orderItems
             };
 
+            // Qəbz üçün səbətin surəti (resetApp-dan əvvəl)
+            const receiptItems = Object.entries(cart).map(([name, d]) => ({
+                name: name,
+                price: d.price,
+                quantity: d.quantity
+            }));
+            const localTotal = receiptItems.reduce((s, i) => s + i.price * i.quantity, 0);
+
             const originalBtnHtml = submitOrderBtn.innerHTML;
             submitOrderBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Göndərilir...';
             submitOrderBtn.disabled = true;
@@ -524,8 +625,15 @@
             try {
                 const response = await sendOrder(orderData);
                 if (response.success) {
+                    const receipt = {
+                        date: new Date(),
+                        tableNo: tableNo,
+                        customerName: customerName,
+                        items: receiptItems,
+                        total: (typeof response.total === 'number') ? response.total : localTotal
+                    };
                     closeOrderModal();
-                    showToast();
+                    showReceipt(receipt);
                     resetApp();
                 } else {
                     alert('Xəta baş verdi: ' + response.error);
@@ -545,17 +653,6 @@
             updateUI('');
             tableNoInput.value = '';
             customerNameInput.value = '';
-        }
-
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.remove('-translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('-translate-y-20', 'opacity-0');
-            }, 3000);
         }
 
         // ---------------- Scroll spy ----------------
