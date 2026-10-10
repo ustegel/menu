@@ -214,8 +214,8 @@
             <div class="p-6 overflow-y-auto" id="order-modal-content">
                 <div class="space-y-4 mb-8">
                     <div>
-                        <label class="block text-sm font-medium text-stg-textSecondary mb-2">Masa No <span class="text-stg-danger">*</span></label>
-                        <input type="number" id="table-no" class="input-field w-full p-3" placeholder="Məs: 12" required>
+                        <label class="block text-sm font-medium text-stg-textSecondary mb-2">Komanda adı (və ya masa nömrəsi) <span class="text-stg-danger">*</span></label>
+                        <input type="text" id="table-no" class="input-field w-full p-3" placeholder="Məs: Qartallar və ya 12" required>
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-stg-textSecondary mb-2">Adınız <span class="text-stg-danger">*</span></label>
@@ -262,7 +262,7 @@
 
                 <div class="text-sm space-y-1 my-4">
                     <div class="flex justify-between"><span class="text-stg-textSecondary">Tarix:</span><span class="font-medium text-stg-ink" id="receipt-date"></span></div>
-                    <div class="flex justify-between"><span class="text-stg-textSecondary">Masa No:</span><span class="font-medium text-stg-ink" id="receipt-table"></span></div>
+                    <div class="flex justify-between"><span class="text-stg-textSecondary">Komanda/Masa:</span><span class="font-medium text-stg-ink" id="receipt-table"></span></div>
                     <div class="flex justify-between gap-4"><span class="text-stg-textSecondary">Ad:</span><span class="font-medium text-stg-ink text-right break-words" id="receipt-name"></span></div>
                 </div>
 
@@ -586,7 +586,7 @@
             const customerName = customerNameInput.value.trim();
 
             if (!tableNo || !customerName) {
-                alert('Zəhmət olmasa Masa No və Adınızı daxil edin.');
+                alert('Zəhmət olmasa Komanda adı (və ya masa nömrəsi) və Adınızı daxil edin.');
 
                 if (!tableNo) tableNoInput.classList.add('border-stg-danger');
                 if (!customerName) customerNameInput.classList.add('border-stg-danger');
